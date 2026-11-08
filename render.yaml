@@ -1,0 +1,58 @@
+# Render Blueprint: one Docker web service (Go API + built React site on the
+# same origin) and one Postgres database.
+#
+# Render dashboard -> New -> Blueprint -> pick this repo. It will ask for the
+# values marked `sync: false` (all optional — leave blank to skip a feature).
+#
+# FREE PLAN LIMITS (from render.com/docs/free):
+#   - the web service sleeps after 15 min without traffic; the next visit
+#     takes about a minute to wake it.
+#   - the free database EXPIRES 30 DAYS after creation, has no backups, and
+#     is deleted 14 days after that unless upgraded. Switch `plan` below to a
+#     paid one before real customer data goes in.
+
+services:
+  - type: web
+    name: hpcl
+    runtime: docker
+    region: singapore          # closest Render region to India
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hpcl-db
+          property: connectionString
+      # Random secrets generated once by Render. Never reuse dev values.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OTP_PEPPER
+        generateValue: true
+      - key: APP_ENV
+        value: production      # HTTPS-only (Secure) login cookie
+      # CLIENT_ORIGIN is deliberately not set: the API falls back to
+      # RENDER_EXTERNAL_URL (this service's own https://….onrender.com URL),
+      # which is the site's origin because the API serves the site.
+      # Set it only if you add a custom domain.
+
+      # Optional: real OTP emails. Blank = codes are only written to the log,
+      # which means nobody can log in with OTP in production. See
+      # services/api/.env.example for how to create a Gmail App Password.
+      - key: GMAIL_SMTP_USER
+        sync: false
+      - key: GMAIL_SMTP_APP_PASSWORD
+        sync: false
+      # Optional: Google Sign-In. Both must be the same OAuth Client ID; add
+      # this service's URL to its Authorized JavaScript origins.
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false
+
+databases:
+  - name: hpcl-db
+    plan: free
+    region: singapore
+    databaseName: jpganeriwala_hpcl
+    user: hpcl_app

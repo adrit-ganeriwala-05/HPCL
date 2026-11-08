@@ -1,0 +1,14 @@
+# Keep the Docker build context small and free of secrets.
+**/node_modules
+**/dist
+.git
+.claude
+scripts
+e2e-screenshots
+**/*.log
+
+# Never bake local secrets into an image. (client/.env would otherwise be
+# read by Vite during the build.) Real values come from Render's env vars.
+**/.env
+**/.env.*
+!**/.env.example

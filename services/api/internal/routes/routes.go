@@ -238,5 +238,11 @@ func Setup(db *gorm.DB, cfg config.Config, logger *zap.Logger) *gin.Engine {
 		inventory.PATCH("/transactions/:id", adminOnly, inventoryH.UpdateTransaction)
 	}
 
+	// Production (Render): the same process also serves the built frontend,
+	// so the site and the API share one origin. Unset in local dev.
+	if cfg.StaticDir != "" {
+		router.NoRoute(spaHandler(cfg.StaticDir))
+	}
+
 	return router
 }

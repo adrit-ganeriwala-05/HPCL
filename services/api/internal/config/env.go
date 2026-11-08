@@ -41,6 +41,13 @@ type Config struct {
 	// flow — verifying a signed ID token doesn't require one, unlike the
 	// server-side authorization-code exchange.
 	GoogleClientID string
+
+	// StaticDir, when set, is a folder holding the built React app (the
+	// contents of client/dist). The API then serves it for every non-/api
+	// path, with index.html as the fallback for client-side routes — one
+	// service, one origin, so the auth cookie and CSRF check just work.
+	// Empty (local dev) = API only; Vite serves the frontend.
+	StaticDir string
 }
 
 func (c Config) IsProduction() bool { return c.AppEnv == "production" }
@@ -56,9 +63,14 @@ func Load() Config {
 	}
 
 	return Config{
-		Port:         getEnv("PORT", "8080"),
-		DatabaseURL:  getEnv("DATABASE_URL", "host=localhost user=postgres password=postgres dbname=jpganeriwala_hpcl port=5432 sslmode=disable"),
-		ClientOrigin: getEnv("CLIENT_ORIGIN", "http://localhost:5173"),
+		Port:        getEnv("PORT", "8080"),
+		DatabaseURL: getEnv("DATABASE_URL", "host=localhost user=postgres password=postgres dbname=jpganeriwala_hpcl port=5432 sslmode=disable"),
+		// On Render, RENDER_EXTERNAL_URL (e.g. https://hpcl.onrender.com) is
+		// set automatically — and when the API also serves the frontend
+		// (STATIC_DIR), that IS the browser's origin, so no manual value is
+		// needed there. An explicit CLIENT_ORIGIN always wins.
+		ClientOrigin: getEnv("CLIENT_ORIGIN", getEnv("RENDER_EXTERNAL_URL", "http://localhost:5173")),
+		StaticDir:    getEnv("STATIC_DIR", ""),
 		JWTSecret:    getEnv("JWT_SECRET", ""),
 		JWTTTL:       ttl,
 		AppEnv:       getEnv("APP_ENV", "development"),
