@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M/s Jay Prakash Ganeriwala — Authorized HPCL CFA for Industrial Lubricants, Raniganj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141a20;
+    --ink-soft:#3b444d;
+    --blue-deep:#0b3c74;
+    --blue-mid:#155a9c;
+    --blue-pale:#e8eff7;
+    --orange:#e2620c;
+    --orange-soft:#f6dcc7;
+    --amber:#f3a712;
+    --paper:#f7f4ee;
+    --paper-dim:#efece3;
+    --steel:#d8dee3;
+    --white:#ffffff;
+    --shadow: 0 20px 40px -20px rgba(11,60,116,0.35);
+    --ease: cubic-bezier(.22,.9,.3,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4,.display{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    margin:0;
+    color:var(--blue-deep);
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+
+  /* ---------- Top utility bar ---------- */
+  .topbar{
+    background:var(--blue-deep);
+    color:#dce8f7;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.03em;
+  }
+  .topbar .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:8px; padding-bottom:8px; flex-wrap:wrap; gap:6px;
+  }
+  .topbar .badge{
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,0.08);
+    padding:3px 10px; border-radius:2px;
+    border:1px solid rgba(255,255,255,0.15);
+  }
+  .topbar .badge .dot{width:6px;height:6px;background:var(--amber);border-radius:50%;display:inline-block;}
+  .topbar .contacts{display:flex; gap:18px;}
+  .topbar .contacts a{opacity:0.92;}
+  .topbar .contacts a:hover{color:#fff;}
+
+  /* ---------- Main nav ---------- */
+  .mainnav{
+    background:var(--white);
+    border-bottom:1px solid var(--steel);
+    position:sticky; top:0; z-index:50;
+  }
+  .mainnav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:80px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:44px;height:44px;border-radius:4px;
+    background:linear-gradient(135deg,var(--blue-deep),var(--blue-mid));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff; font-family:'Oswald'; font-weight:700; font-size:17px;
+    flex-shrink:0;
+    box-shadow:0 6px 14px -4px rgba(11,60,116,0.5);
+  }
+  .brand-text .name{
+    font-family:'Oswald'; font-weight:600; font-size:15.5px; color:var(--ink); line-height:1.15;
+    text-transform:none;
+  }
+  .brand-text .sub{
+    font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.06em; color:var(--orange); text-transform:uppercase; margin-top:3px;
+  }
+  .navlinks{display:flex; align-items:center; gap:4px;}
+  .navlinks button{
+    background:none;border:none; padding:10px 16px; font-size:14px; font-weight:600;
+    color:var(--ink-soft); position:relative; letter-spacing:0.02em;
+    font-family:'Inter';
+  }
+  .navlinks button::after{
+    content:''; position:absolute; left:16px; right:16px; bottom:4px; height:2px;
+    background:var(--orange); transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease);
+  }
+  .navlinks button:hover{color:var(--blue-deep);}
+  .navlinks button.active{color:var(--blue-deep);}
+  .navlinks button.active::after{transform:scaleX(1);}
+  .nav-cta{
+    background:var(--orange); color:#fff; padding:11px 20px; border-radius:3px; font-weight:600; font-size:13.5px;
+    border:none; letter-spacing:0.02em; transition:background .2s, transform .2s;
+  }
+  .nav-cta:hover{background:#c8540a; transform:translateY(-1px);}
+  .hamburger{display:none; flex-direction:column; gap:5px; background:none; border:none; padding:8px;}
+  .hamburger span{width:24px;height:2px;background:var(--ink);display:block;}
+
+  /* ---------- Page transition wrapper ---------- */
+  .page{display:none;}
+  .page.active{display:block; animation:pageIn .55s var(--ease);}
+  @keyframes pageIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.08s;}
+  .reveal-delay-2{transition-delay:.16s;}
+  .reveal-delay-3{transition-delay:.24s;}
+  .reveal-delay-4{transition-delay:.32s;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(1100px 500px at 85% -10%, rgba(21,90,156,0.35), transparent 60%),
+      linear-gradient(180deg,var(--blue-deep) 0%, #0a3363 100%);
+    color:#fff;
+    padding:76px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative; z-index:2;}
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center; padding-bottom:50px;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--amber); border:1px solid rgba(243,167,18,0.4); padding:6px 12px; border-radius:2px;
+    background:rgba(243,167,18,0.08);
+  }
+  .hero h1{
+    color:#fff; font-size:44px; line-height:1.08; margin-top:20px; font-weight:700;
+  }
+  .hero h1 em{color:var(--amber); font-style:normal;}
+  .hero p.lead{
+    font-family:'Inter'; font-size:16.5px; line-height:1.65; color:#cfe0f0; max-width:480px; margin-top:18px;
+  }
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--orange); color:#fff; padding:14px 26px; border-radius:3px; font-weight:600; font-size:14.5px;
+    border:none; letter-spacing:0.02em; transition:background .2s, transform .2s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary:hover{background:#c8540a; transform:translateY(-2px);}
+  .btn-ghost{
+    background:transparent; color:#fff; padding:14px 26px; border-radius:3px; font-weight:600; font-size:14.5px;
+    border:1px solid rgba(255,255,255,0.35); letter-spacing:0.02em; transition:border-color .2s, background .2s, transform .2s;
+  }
+  .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,0.06); transform:translateY(-2px);}
+
+  /* Pipeline signature graphic */
+  .pipeline-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:6px; padding:26px 22px 22px;
+    backdrop-filter:blur(2px);
+  }
+  .pipeline-card .cap{
+    font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:#9fc0dd; margin-bottom:14px;
+  }
+  .pipeline-svg{width:100%; height:auto; display:block;}
+  .pipe-path{
+    stroke:rgba(255,255,255,0.25); stroke-width:2; fill:none;
+  }
+  .pipe-flow{
+    stroke:var(--amber); stroke-width:2.5; fill:none;
+    stroke-dasharray:6 10;
+    animation:flow 1.8s linear infinite;
+  }
+  @keyframes flow{ to{ stroke-dashoffset:-32; } }
+  .pipe-node{fill:#0b3c74; stroke:var(--amber); stroke-width:2;}
+  .pipe-node.hub{fill:var(--orange); stroke:#fff;}
+  .pipe-label{
+    font-family:'IBM Plex Mono'; font-size:10px; fill:#cfe0f0; letter-spacing:0.03em;
+  }
+  .pipe-label.hub{fill:#ffe4c9; font-weight:600;}
+
+  .hero-strip{
+    border-top:1px solid rgba(255,255,255,0.14);
+    padding:20px 0;
+  }
+  .hero-strip .wrap{
+    display:flex; gap:36px; flex-wrap:wrap; justify-content:space-between;
+  }
+  .hs-item{display:flex; align-items:center; gap:10px; color:#cfe0f0; font-size:13px; font-family:'Inter'; font-weight:500;}
+  .hs-item .ico{color:var(--amber); font-size:16px;}
+
+  /* ---------- Section basics ---------- */
+  section{padding:80px 0;}
+  .section-head{max-width:640px; margin-bottom:44px;}
+  .section-head .kicker{
+    font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--orange); font-weight:500;
+  }
+  .section-head h2{font-size:32px; margin-top:10px; line-height:1.15;}
+  .section-head p{font-size:15.5px; color:var(--ink-soft); line-height:1.6; margin-top:14px;}
+  .section-dim{background:var(--paper-dim);}
+
+  /* dashed pipeline divider */
+  .divider{
+    height:1px; background:repeating-linear-gradient(90deg, var(--steel) 0 10px, transparent 10px 18px);
+    margin:0;
+  }
+
+  /* ---------- Cards grid: product categories ---------- */
+  .grid-4{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  .grid-2{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+
+  .prod-card{
+    background:#fff; border:1px solid var(--steel); border-radius:6px; padding:24px 20px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+    position:relative; overflow:hidden;
+  }
+  .prod-card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,var(--blue-deep),var(--orange));
+    transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease);
+  }
+  .prod-card:hover{transform:translateY(-6px); box-shadow:var(--shadow); border-color:transparent;}
+  .prod-card:hover::before{transform:scaleX(1);}
+  .prod-icon{
+    width:42px;height:42px; border-radius:6px; background:var(--blue-pale); color:var(--blue-deep);
+    display:flex; align-items:center; justify-content:center; font-size:19px; margin-bottom:16px;
+  }
+  .prod-card h4{font-size:15.5px; color:var(--ink); text-transform:none; font-weight:700; font-family:'Inter';}
+  .prod-card p{font-size:13.5px; color:var(--ink-soft); line-height:1.55; margin-top:8px;}
+
+  /* ---------- Who we serve ---------- */
+  .serve-row{
+    display:grid; grid-template-columns:repeat(6,1fr); gap:14px;
+  }
+  .serve-item{
+    text-align:center; padding:20px 10px; border-radius:6px; background:#fff; border:1px solid var(--steel);
+    transition:border-color .25s, transform .25s;
+  }
+  .serve-item:hover{border-color:var(--orange); transform:translateY(-4px);}
+  .serve-item .ico{font-size:24px; margin-bottom:10px;}
+  .serve-item .lbl{font-size:12px; font-weight:600; color:var(--ink-soft); line-height:1.35;}
+
+  /* ---------- Trust / stat strip ---------- */
+  .trust-strip{
+    background:var(--blue-deep); color:#fff; border-radius:8px;
+    padding:36px 30px; display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  }
+  .trust-item .num{font-family:'Oswald'; font-size:30px; color:var(--amber); font-weight:700;}
+  .trust-item .lbl{font-size:12.5px; color:#cfe0f0; margin-top:4px; font-family:'Inter'; font-weight:500;}
+
+  /* ---------- CTA band ---------- */
+  .cta-band{
+    background:linear-gradient(120deg,var(--orange),#c8540a);
+    border-radius:8px; padding:40px 40px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .cta-band h3{color:#fff; font-size:24px;}
+  .cta-band p{font-size:14px; color:#ffe4c9; margin-top:6px;}
+  .cta-band .btn-ghost{border-color:rgba(255,255,255,0.55);}
+  .cta-band .btn-ghost:hover{background:rgba(255,255,255,0.12);}
+
+  /* ---------- Services page ---------- */
+  .service-detail{
+    display:grid; grid-template-columns:56px 1fr; gap:20px; padding:26px 0;
+    border-bottom:1px solid var(--steel);
+  }
+  .service-detail:last-child{border-bottom:none;}
+  .service-num{
+    font-family:'IBM Plex Mono'; color:var(--orange); font-size:15px; font-weight:500; padding-top:2px;
+  }
+  .service-detail h4{font-size:18px; color:var(--ink); text-transform:none; font-family:'Oswald'; font-weight:600;}
+  .service-detail p{font-size:14.5px; color:var(--ink-soft); line-height:1.65; margin-top:8px; max-width:640px;}
+
+  /* ---------- About page ---------- */
+  .about-hero{
+    background:var(--blue-pale); border-radius:8px; padding:44px 40px; margin-bottom:50px;
+  }
+  .about-hero p{font-size:16px; color:var(--ink-soft); line-height:1.75; max-width:760px;}
+  .value-card{
+    background:#fff; border:1px solid var(--steel); border-radius:6px; padding:22px;
+  }
+  .value-card .tag{font-family:'IBM Plex Mono'; font-size:11px; color:var(--orange); letter-spacing:0.05em; text-transform:uppercase;}
+  .value-card h4{font-size:16px; margin-top:10px; text-transform:none; font-family:'Inter'; color:var(--ink); font-weight:700;}
+  .value-card p{font-size:13.5px; color:var(--ink-soft); margin-top:8px; line-height:1.55;}
+
+  .area-list{display:flex; flex-wrap:wrap; gap:10px;}
+  .area-chip{
+    background:#fff; border:1px solid var(--steel); padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600;
+    color:var(--blue-deep); font-family:'Inter';
+  }
+
+  /* ---------- Contact page ---------- */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;}
+  .contact-info-card{
+    background:var(--blue-deep); color:#fff; border-radius:8px; padding:34px 30px;
+  }
+  .contact-info-card h3{color:#fff; font-size:20px;}
+  .cinfo-row{display:flex; gap:14px; margin-top:22px; align-items:flex-start;}
+  .cinfo-row .ico{
+    width:34px;height:34px;border-radius:5px; background:rgba(255,255,255,0.1); display:flex; align-items:center;justify-content:center; flex-shrink:0; font-size:15px; color:var(--amber);
+  }
+  .cinfo-row .txt{font-size:13.5px; line-height:1.6; color:#dce8f7;}
+  .cinfo-row .txt .lbl{font-family:'IBM Plex Mono'; font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:#9fc0dd; margin-bottom:3px; display:block;}
+  .hours-box{margin-top:26px; padding-top:22px; border-top:1px solid rgba(255,255,255,0.15);}
+  .hours-row{display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:#dce8f7;}
+
+  .form-card{background:#fff; border:1px solid var(--steel); border-radius:8px; padding:30px;}
+  .form-card h3{font-size:19px; margin-bottom:6px;}
+  .form-card .note{font-size:13px; color:var(--ink-soft); margin-bottom:22px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12.5px; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .field input, .field select, .field textarea{
+    width:100%; padding:11px 13px; border:1px solid var(--steel); border-radius:4px; font-family:'Inter'; font-size:14px;
+    background:var(--paper); transition:border-color .2s, background .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none; border-color:var(--blue-mid); background:#fff;
+  }
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .submit-btn{
+    background:var(--orange); color:#fff; border:none; padding:13px 28px; border-radius:4px; font-weight:600; font-size:14px;
+    width:100%; transition:background .2s, transform .2s;
+  }
+  .submit-btn:hover{background:#c8540a;}
+  .form-success{
+    display:none; background:#e9f7ee; border:1px solid #b9e3c6; color:#1e7a3c; padding:14px 16px; border-radius:5px; font-size:13.5px; margin-top:14px;
+  }
+  .form-success.show{display:block; animation:pageIn .4s var(--ease);}
+
+  .map-box{
+    margin-top:24px; height:220px; border-radius:8px; border:1px dashed var(--steel);
+    background:
+      linear-gradient(135deg, var(--blue-pale) 25%, transparent 25%) -10px 0/20px 20px,
+      linear-gradient(225deg, var(--blue-pale) 25%, transparent 25%) -10px 0/20px 20px,
+      var(--paper-dim);
+    display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:var(--blue-deep);
+  }
+  .map-box .pin{font-size:26px;}
+  .map-box .mtxt{font-family:'IBM Plex Mono'; font-size:11px; color:var(--ink-soft); text-align:center; padding:0 20px;}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink); color:#c9d2d9; padding:50px 0 26px;}
+  .footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px;}
+  footer h5{color:#fff; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; font-family:'IBM Plex Mono'; margin-bottom:16px; font-weight:500;}
+  footer p, footer li{font-size:13.5px; line-height:1.7; color:#a6b0b8;}
+  footer ul{list-style:none; padding:0; margin:0;}
+  footer li{margin-bottom:8px;}
+  footer li a:hover{color:#fff;}
+  .footer-bottom{
+    border-top:1px solid #262e34; margin-top:40px; padding-top:20px; display:flex; justify-content:space-between;
+    font-size:12px; color:#6f7982; flex-wrap:wrap; gap:8px;
+  }
+  .footer-badge{color:var(--amber); font-family:'IBM Plex Mono';}
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:32px;}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+    .grid-3{grid-template-columns:1fr;}
+    .grid-2{grid-template-columns:1fr;}
+    .serve-row{grid-template-columns:repeat(3,1fr);}
+    .trust-strip{grid-template-columns:repeat(2,1fr);}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr; gap:28px;}
+    .navlinks{
+      position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px;
+      background:#fff; flex-direction:column; align-items:flex-start; padding:100px 30px 30px;
+      transform:translateX(100%); transition:transform .4s var(--ease); box-shadow:-10px 0 30px rgba(0,0,0,0.15);
+      z-index:60;
+    }
+    .navlinks.open{transform:translateX(0);}
+    .navlinks button{width:100%; text-align:left; padding:14px 4px; font-size:16px;}
+    .navlinks .nav-cta{margin-top:10px;}
+    .hamburger{display:flex;}
+    .field-row{grid-template-columns:1fr;}
+    .about-hero{padding:30px 24px;}
+    .cta-band{padding:30px 24px;}
+  }
+  @media (max-width:600px){
+    .serve-row{grid-template-columns:repeat(2,1fr);}
+    .hero h1{font-size:27px;}
+    .topbar .contacts{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001s !important; transition-duration:0.001s !important;}
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===================== TOP UTILITY BAR ===================== -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="badge"><span class="dot"></span> AUTHORIZED HPCL CONSIGNMENT &amp; FORWARDING AGENT — INDUSTRIAL LUBRICANTS</div>
+      <div class="contacts">
+        <a href="tel:+91XXXXXXXXXX">☎ +91 XXXXX XXXXX</a>
+        <a href="mailto:info@jpganeriwala-hpcl.com">✉ info@jpganeriwala-hpcl.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== MAIN NAV ===================== -->
+  <nav class="mainnav">
+    <div class="wrap">
+      <div class="brand">
+        <div class="brand-mark">JG</div>
+        <div class="brand-text">
+          <div class="name">M/s Jay Prakash Ganeriwala</div>
+          <div class="sub">CFA for Industrial Lubricants · Raniganj</div>
+        </div>
+      </div>
+      <div class="navlinks" id="navlinks">
+        <button data-page="home" class="active">Home</button>
+        <button data-page="services">Services</button>
+        <button data-page="about">About</button>
+        <button data-page="contact">Contact</button>
+        <button class="nav-cta" data-page="contact">Request a Quote</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ===================== PAGE: HOME ===================== -->
+  <main class="page active" id="page-home">
+
+    <section class="hero" style="padding-bottom:0;">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">● Serving the Raniganj–Asansol–Durgapur Industrial Belt</span>
+            <h1>Genuine SERVO<br>Industrial Lubricants,<br><em>Delivered on Schedule.</em></h1>
+            <p class="lead">Authorized HPCL Consignment &amp; Forwarding Agent supplying engine oils, hydraulic fluids, gear oils and greases in bulk to coal mines, steel plants, power stations and fleets — with every drum traceable back to the refinery.</p>
+            <div class="hero-ctas">
+              <a href="tel:+91XXXXXXXXXX" class="btn-primary">☎ Call for Bulk Order</a>
+              <button class="btn-ghost" data-page="services">View Product Range →</button>
+            </div>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="cap">Supply Chain — Refinery to Plant Floor</div>
+            <svg class="pipeline-svg" viewBox="0 0 360 190" xmlns="http://www.w3.org/2000/svg">
+              <path class="pipe-path" d="M30,40 L330,40"/>
+              <path class="pipe-flow" d="M30,40 L330,40"/>
+              <path class="pipe-path" d="M30,40 L30,95 L330,95 L330,150 M30,95 L30,150"/>
+              <path class="pipe-flow" d="M30,40 L30,95 L330,95 L330,150 M30,95 L30,150"/>
+
+              <circle class="pipe-node" cx="30" cy="40" r="7"/>
+              <text class="pipe-label" x="12" y="24">HPCL REFINERY</text>
+
+              <circle class="pipe-node hub" cx="30" cy="95" r="9"/>
+              <text class="pipe-label hub" x="46" y="99">JAY PRAKASH GANERIWALA — CFA, RANIGANJ</text>
+
+              <circle class="pipe-node" cx="330" cy="150" r="7"/>
+              <text class="pipe-label" x="252" y="172">COAL MINES</text>
+
+              <circle class="pipe-node" cx="30" cy="150" r="7"/>
+              <text class="pipe-label" x="34" y="172">STEEL &amp; POWER PLANTS</text>
+
+              <circle class="pipe-node" cx="330" cy="40" r="7"/>
+              <text class="pipe-label" x="252" y="24">FLEETS &amp; WORKSHOPS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-strip">
+        <div class="wrap">
+          <div class="hs-item"><span class="ico">✓</span> 100% Genuine SERVO Products</div>
+          <div class="hs-item"><span class="ico">✓</span> Bulk &amp; Tanker Supply</div>
+          <div class="hs-item"><span class="ico">✓</span> Scheduled Doorstep Delivery</div>
+          <div class="hs-item"><span class="ico">✓</span> Institutional &amp; Tender Supply</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Product categories -->
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">What We Supply</div>
+          <h2>Lubricants for Every Machine on the Ground</h2>
+          <p>From a coal-hauling truck to a plant compressor, we stock the SERVO grade built for it — and the volumes to keep it running.</p>
+        </div>
+        <div class="grid-4">
+          <div class="prod-card reveal reveal-delay-1">
+            <div class="prod-icon">⛽</div>
+            <h4>Engine &amp; Automotive Oils</h4>
+            <p>For coal-transport trucks, light and heavy commercial vehicles keeping the belt's fleets on the road.</p>
+          </div>
+          <div class="prod-card reveal reveal-delay-2">
+            <div class="prod-icon">⚙</div>
+            <h4>Industrial &amp; Hydraulic Oils</h4>
+            <p>For excavators, dumpers, cranes and hydraulic systems in mining and construction machinery.</p>
+          </div>
+          <div class="prod-card reveal reveal-delay-3">
+            <div class="prod-icon">🔩</div>
+            <h4>Gear Oils &amp; Greases</h4>
+            <p>For conveyor systems, industrial gearboxes and bearings running continuous shifts.</p>
+          </div>
+          <div class="prod-card reveal reveal-delay-4">
+            <div class="prod-icon">💧</div>
+            <h4>Coolants &amp; Specialty Fluids</h4>
+            <p>Engine coolants and specialty industrial fluids for steel, sponge iron and power plant equipment.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Who we serve -->
+    <section class="section-dim">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Who We Serve</div>
+          <h2>Built Around the Raniganj Coal Belt</h2>
+        </div>
+        <div class="serve-row">
+          <div class="serve-item reveal reveal-delay-1"><div class="ico">⛏</div><div class="lbl">Coal Mining &amp; Allied Units</div></div>
+          <div class="serve-item reveal reveal-delay-1"><div class="ico">🏭</div><div class="lbl">Steel &amp; Sponge Iron Plants</div></div>
+          <div class="serve-item reveal reveal-delay-2"><div class="ico">⚡</div><div class="lbl">Thermal Power Plants</div></div>
+          <div class="serve-item reveal reveal-delay-2"><div class="ico">🚛</div><div class="lbl">Transport Fleet Operators</div></div>
+          <div class="serve-item reveal reveal-delay-3"><div class="ico">🔧</div><div class="lbl">Workshops &amp; Garages</div></div>
+          <div class="serve-item reveal reveal-delay-3"><div class="ico">🧱</div><div class="lbl">Cement &amp; Construction</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust strip -->
+    <section style="padding-top:60px;">
+      <div class="wrap">
+        <div class="trust-strip reveal">
+          <div class="trust-item"><div class="num">100%</div><div class="lbl">Genuine, HPCL-Traceable Stock</div></div>
+          <div class="trust-item"><div class="num">6+</div><div class="lbl">Towns Covered Across the Belt</div></div>
+          <div class="trust-item"><div class="num">24-48H</div><div class="lbl">Typical Bulk Delivery Window</div></div>
+          <div class="trust-item"><div class="num">B2B</div><div class="lbl">Institutional &amp; Tender Ready</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA band -->
+    <section style="padding-top:20px;">
+      <div class="wrap">
+        <div class="cta-band reveal">
+          <div>
+            <h3>Running low on plant floor?</h3>
+            <p>Call in your requirement — we quote bulk orders same day.</p>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="tel:+91XXXXXXXXXX" class="btn-primary" style="background:#fff; color:var(--orange);">☎ Call Now</a>
+            <button class="btn-ghost" data-page="contact">Send Enquiry</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== PAGE: SERVICES ===================== -->
+  <main class="page" id="page-services">
+    <section style="padding-top:56px;">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Services</div>
+          <h2>How We Keep Your Operation Running</h2>
+          <p>As an Authorized HPCL Consignment &amp; Forwarding Agent, we handle everything between the refinery and your storage tank.</p>
+        </div>
+
+        <div>
+          <div class="service-detail reveal">
+            <div class="service-num">01</div>
+            <div><h4>Bulk &amp; Tanker Supply</h4><p>Large-volume orders for continuous plant operations — supplied in drums or by tanker, sized to your consumption and storage capacity.</p></div>
+          </div>
+          <div class="service-detail reveal">
+            <div class="service-num">02</div>
+            <div><h4>Scheduled Doorstep Delivery</h4><p>Set up a repeat delivery schedule for regular industrial accounts, so machinery never runs short between orders.</p></div>
+          </div>
+          <div class="service-detail reveal">
+            <div class="service-num">03</div>
+            <div><h4>Institutional &amp; Tender Supply</h4><p>Rate-contract and tender supply for government departments, PSUs and large industrial houses across the district.</p></div>
+          </div>
+          <div class="service-detail reveal">
+            <div class="service-num">04</div>
+            <div><h4>Technical Lubrication Guidance</h4><p>Grade selection support for your specific machinery — the right oil reduces wear, downtime and long-run maintenance cost.</p></div>
+          </div>
+          <div class="service-detail reveal">
+            <div class="service-num">05</div>
+            <div><h4>100% Genuine SERVO Product Assurance</h4><p>Every consignment moves through HPCL's authorized channel and is traceable back to source — no diluted or grey-market stock.</p></div>
+          </div>
+          <div class="service-detail reveal">
+            <div class="service-num">06</div>
+            <div><h4>Account Facility for Regular Clients</h4><p>Flexible billing arrangements for established industrial and institutional accounts — ask us about terms for your organisation.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section-dim">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Product Range</div>
+          <h2>SERVO Grades We Stock</h2>
+        </div>
+        <div class="grid-3">
+          <div class="prod-card reveal reveal-delay-1"><div class="prod-icon">⛽</div><h4>Automotive Engine Oils</h4><p>For petrol, diesel and heavy commercial vehicle engines, including fleet-grade options.</p></div>
+          <div class="prod-card reveal reveal-delay-2"><div class="prod-icon">⚙</div><h4>Hydraulic &amp; Industrial Oils</h4><p>For hydraulic systems, compressors and general industrial machinery.</p></div>
+          <div class="prod-card reveal reveal-delay-3"><div class="prod-icon">🔩</div><h4>Gear Oils</h4><p>For industrial gearboxes and heavy-duty transmission systems.</p></div>
+          <div class="prod-card reveal reveal-delay-1"><div class="prod-icon">🧴</div><h4>Greases</h4><p>Multi-purpose and specialty greases for bearings, conveyors and mining equipment.</p></div>
+          <div class="prod-card reveal reveal-delay-2"><div class="prod-icon">💧</div><h4>Coolants</h4><p>Engine and radiator coolants for automotive and industrial cooling systems.</p></div>
+          <div class="prod-card reveal reveal-delay-3"><div class="prod-icon">🏭</div><h4>Specialty Industrial Fluids</h4><p>Cutting oils and process fluids for steel and sponge iron plant operations.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="cta-band reveal">
+          <div>
+            <h3>Not sure which grade you need?</h3>
+            <p>Tell us your machinery and we'll recommend the right SERVO product.</p>
+          </div>
+          <button class="btn-primary" style="background:#fff; color:var(--orange);" data-page="contact">Ask Our Team →</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== PAGE: ABOUT ===================== -->
+  <main class="page" id="page-about">
+    <section style="padding-top:56px;">
+      <div class="wrap">
+        <div class="about-hero reveal">
+          <div class="kicker">About Us</div>
+          <h2 style="margin-top:10px;">A Local Link in HPCL's Supply Chain</h2>
+          <p style="margin-top:16px;">M/s Jay Prakash Ganeriwala operates as an Authorized Consignment &amp; Forwarding Agent (CFA) of Hindustan Petroleum Corporation Limited for industrial lubricants, based in Raniganj — at the heart of the Raniganj Coalfield and the wider Asansol–Durgapur industrial corridor of West Bengal. We stock and move genuine SERVO-branded lubricants from HPCL through to the mines, plants and fleets that run this region.</p>
+        </div>
+
+        <div class="section-head reveal">
+          <div class="kicker">Why Industries Choose Us</div>
+          <h2>Reliability Built on Local Knowledge</h2>
+        </div>
+        <div class="grid-3">
+          <div class="value-card reveal reveal-delay-1">
+            <div class="tag">Authorized</div>
+            <h4>Traceable, Genuine Stock</h4>
+            <p>Every drum moves through HPCL's official channel — no grey-market risk on your machinery.</p>
+          </div>
+          <div class="value-card reveal reveal-delay-2">
+            <div class="tag">Local</div>
+            <h4>We Know This Belt</h4>
+            <p>Based in Raniganj, we understand the operating conditions of the mines and plants we serve.</p>
+          </div>
+          <div class="value-card reveal reveal-delay-3">
+            <div class="tag">Responsive</div>
+            <h4>Bulk Orders, Fast Turnaround</h4>
+            <p>Tanker and drum supply sized and scheduled around your consumption, not ours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section-dim">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Coverage</div>
+          <h2>Area We Serve</h2>
+          <p>Based in Raniganj, supplying across the Paschim Bardhaman industrial belt.</p>
+        </div>
+        <div class="area-list reveal">
+          <span class="area-chip">Raniganj</span>
+          <span class="area-chip">Asansol</span>
+          <span class="area-chip">Durgapur</span>
+          <span class="area-chip">Andal</span>
+          <span class="area-chip">Kulti</span>
+          <span class="area-chip">Barakar</span>
+          <span class="area-chip">Jamuria</span>
+          <span class="area-chip">Ukhra</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== PAGE: CONTACT ===================== -->
+  <main class="page" id="page-contact">
+    <section style="padding-top:56px;">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="kicker">Contact</div>
+          <h2>Get a Bulk Quote</h2>
+          <p>Reach out for pricing, delivery scheduling, or grade recommendations — we typically respond same business day.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-card reveal">
+            <h3>Contact Details</h3>
+            <div class="cinfo-row">
+              <div class="ico">☎</div>
+              <div class="txt"><span class="lbl">Phone</span>+91 XXXXX XXXXX</div>
+            </div>
+            <div class="cinfo-row">
+              <div class="ico">✉</div>
+              <div class="txt"><span class="lbl">Email</span>info@jpganeriwala-hpcl.com</div>
+            </div>
+            <div class="cinfo-row">
+              <div class="ico">📍</div>
+              <div class="txt"><span class="lbl">Address</span>[Shop / Godown Address], Raniganj, Paschim Bardhaman, West Bengal — [PIN]</div>
+            </div>
+            <div class="cinfo-row">
+              <div class="ico">🪪</div>
+              <div class="txt"><span class="lbl">Authorization</span>Authorized HPCL Consignment &amp; Forwarding Agent — Industrial Lubricants</div>
+            </div>
+
+            <div class="hours-box">
+              <div class="hours-row"><span>Monday – Saturday</span><span class="mono">9:00 AM – 7:00 PM</span></div>
+              <div class="hours-row"><span>Sunday</span><span class="mono">Closed</span></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-card reveal">
+              <h3>Send an Enquiry</h3>
+              <div class="note">Fill in your requirement and we'll get back with a quote.</div>
+              <form id="enquiryForm">
+                <div class="field-row">
+                  <div class="field"><label>Your Name</label><input type="text" required placeholder="Full name"></div>
+                  <div class="field"><label>Company / Site</label><input type="text" placeholder="e.g. plant, mine, workshop name"></div>
+                </div>
+                <div class="field-row">
+                  <div class="field"><label>Phone Number</label><input type="tel" required placeholder="10-digit mobile number"></div>
+                  <div class="field"><label>Product Required</label>
+                    <select>
+                      <option>Engine / Automotive Oil</option>
+                      <option>Hydraulic / Industrial Oil</option>
+                      <option>Gear Oil</option>
+                      <option>Grease</option>
+                      <option>Coolant</option>
+                      <option>Not sure — need advice</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Quantity &amp; Details</label>
+                  <textarea rows="4" placeholder="e.g. 5 drums of hydraulic oil per month, delivered to Andal site"></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Enquiry</button>
+                <div class="form-success" id="formSuccess">✓ Enquiry noted. We'll call you back shortly — for urgent orders, please call us directly.</div>
+              </form>
+            </div>
+
+            <div class="map-box reveal">
+              <div class="pin">📍</div>
+              <div class="mtxt">Map location — add your Google Maps embed or pin here once the shop location is finalized.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <h5>Jay Prakash Ganeriwala</h5>
+          <p>Authorized HPCL Consignment &amp; Forwarding Agent for Industrial Lubricants, based in Raniganj — serving the coal, steel, power and transport industries of the Paschim Bardhaman belt.</p>
+        </div>
+        <div>
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a data-page="home">Home</a></li>
+            <li><a data-page="services">Services</a></li>
+            <li><a data-page="about">About Us</a></li>
+            <li><a data-page="contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Reach Us</h5>
+          <ul>
+            <li>☎ +91 XXXXX XXXXX</li>
+            <li>✉ info@jpganeriwala-hpcl.com</li>
+            <li>📍 Raniganj, West Bengal</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year"></span> M/s Jay Prakash Ganeriwala. All rights reserved.</span>
+        <span class="footer-badge">AUTHORIZED HPCL CFA — INDUSTRIAL LUBRICANTS</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ---- Page navigation (simulated multi-page SPA) ----
+  var pages = document.querySelectorAll('.page');
+  var navButtons = document.querySelectorAll('[data-page]');
+  var navlinksEl = document.getElementById('navlinks');
+
+  function goToPage(name){
+    pages.forEach(function(p){ p.classList.remove('active'); });
+    var target = document.getElementById('page-' + name);
+    if(target){ target.classList.add('active'); }
+    document.querySelectorAll('.navlinks button[data-page]').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-page') === name && !b.classList.contains('nav-cta'));
+    });
+    navlinksEl.classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+    initReveal();
+  }
+
+  navButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToPage(btn.getAttribute('data-page'));
+    });
+  });
+
+  document.getElementById('hamburger').addEventListener('click', function(){
+    navlinksEl.classList.toggle('open');
+  });
+
+  // ---- Scroll reveal ----
+  function initReveal(){
+    var els = document.querySelectorAll('.page.active .reveal:not(.in)');
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    els.forEach(function(el){ obs.observe(el); });
+  }
+  initReveal();
+
+  // ---- Fake enquiry form submit ----
+  var form = document.getElementById('enquiryForm');
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('formSuccess').classList.add('show');
+      form.reset();
+    });
+  }
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>

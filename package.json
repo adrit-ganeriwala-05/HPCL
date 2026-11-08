@@ -1,0 +1,15 @@
+{
+  "name": "jpganeriwala-hpcl",
+  "version": "1.0.0",
+  "private": true,
+  "description": "M/s Jay Prakash Ganeriwala — HPCL CFA site (Go + Postgres API, Vite + React client)",
+  "scripts": {
+    "dev": "concurrently -n SERVER,CLIENT -c blue,green \"cd services/api && go run ./cmd/server\" \"npm run dev --prefix client\"",
+    "install:all": "cd services/api && go mod download && cd ../../client && npm install",
+    "build": "npm run build --prefix client && cd services/api && go build ./...",
+    "start": "cd services/api && go run ./cmd/server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
