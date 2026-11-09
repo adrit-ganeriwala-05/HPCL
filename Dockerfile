@@ -4,7 +4,12 @@
 #   docker build -t hpcl . && docker run -p 10000:10000 -e DATABASE_URL=... -e JWT_SECRET=... -e OTP_PEPPER=... hpcl
 
 # --- 1. Build the React site -------------------------------------------------
-FROM node:22-alpine AS web
+FROM node:24-alpine AS web
+# Pin npm to the version that wrote client/package-lock.json. Older npm
+# (10.x, and even early 11.x) resolves optional dependencies differently
+# and `npm ci` rejects this lockfile ("Missing: esbuild@… from lock file").
+# If you upgrade npm locally and regenerate the lockfile, bump this too.
+RUN npm install -g npm@11.17.0
 WORKDIR /client
 COPY client/package.json client/package-lock.json ./
 RUN npm ci
@@ -26,7 +31,7 @@ RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/server ./cmd/serve
  && CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/seed ./cmd/seed
 
 # --- 3. Small runtime image --------------------------------------------------
-FROM alpine:3.20
+FROM alpine:3.22
 # ca-certificates: TLS to Gmail SMTP and Google; tzdata: time zone data.
 RUN apk add --no-cache ca-certificates tzdata
 WORKDIR /app
